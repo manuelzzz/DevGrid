@@ -32,4 +32,19 @@ describe("renderContributionGraph", () => {
     const svg = renderContributionGraph([{ date: "2025-01-01", count: 20 }]);
     expect(svg).toContain('fill="#216e39"');
   });
+
+  it("defaults to the light theme when none is given", () => {
+    const svg = renderContributionGraph([{ date: "2025-01-01", count: 0 }]);
+    expect(svg).toContain('fill="#ebedf0"');
+  });
+
+  it("gives a zero-count day the dark theme's lowest color level", () => {
+    const svg = renderContributionGraph([{ date: "2025-01-01", count: 0 }], "dark");
+    expect(svg).toContain('fill="#161b22"');
+  });
+
+  it("gives a high-count day the dark theme's highest color level", () => {
+    const svg = renderContributionGraph([{ date: "2025-01-01", count: 20 }], "dark");
+    expect(svg).toContain('fill="#39d353"');
+  });
 });

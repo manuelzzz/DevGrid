@@ -18,7 +18,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run generate-graph -- /tmp/contributions.svg
+      - run: npm run generate-graph -- /tmp/contributions
         env:
           GITHUB_TOKEN: ${{ github.token }}
           GITHUB_USERNAME: manuelzzz
@@ -38,7 +38,9 @@ jobs:
             git rm -rf . > /dev/null
           fi
 
-          cp /tmp/contributions.svg contributions.svg
-          git add contributions.svg
+          cp /tmp/contributions-light.svg contributions-light.svg
+          cp /tmp/contributions-dark.svg contributions-dark.svg
+          git add contributions-light.svg contributions-dark.svg
+          git rm --ignore-unmatch contributions.svg
           git diff --cached --quiet && echo "No changes" || git commit -m "Update contribution graph"
           git push origin assets

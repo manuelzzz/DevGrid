@@ -6,8 +6,16 @@ const CELL_GAP = 3;
 const STEP = CELL_SIZE + CELL_GAP;
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
-/** Fill color for each activity level, from none to highest (mirrors GitHub's graph). */
-const COLORS = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"];
+export type ContributionGraphTheme = "light" | "dark";
+
+/**
+ * Fill color for each activity level, from none to highest, per theme
+ * (mirrors GitHub's own light/dark contribution graph colors).
+ */
+const PALETTES: Record<ContributionGraphTheme, string[]> = {
+  light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
+  dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
+};
 
 function levelFor(count: number): number {
   if (count <= 0) return 0;
@@ -30,11 +38,15 @@ function toIsoDate(date: Date): string {
  * source, which simply don't appear in the data — still show up as empty
  * cells rather than being compressed out of the graph.
  */
-export function renderContributionGraph(days: ContributionDay[]): string {
+export function renderContributionGraph(
+  days: ContributionDay[],
+  theme: ContributionGraphTheme = "light",
+): string {
   if (days.length === 0) {
     return `<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0"></svg>`;
   }
 
+  const colors = PALETTES[theme];
   const countByDate = new Map(days.map((day) => [day.date, day.count]));
   const sorted = sortByDate(days);
   const start = new Date(`${sorted[0]?.date}T00:00:00Z`);
@@ -55,7 +67,7 @@ export function renderContributionGraph(days: ContributionDay[]): string {
 
     rects.push(
       `<rect x="${x}" y="${y}" width="${CELL_SIZE}" height="${CELL_SIZE}" ` +
-        `fill="${COLORS[levelFor(count)]}"><title>${isoDate}: ${count}</title></rect>`,
+        `fill="${colors[levelFor(count)]}"><title>${isoDate}: ${count}</title></rect>`,
     );
   }
 

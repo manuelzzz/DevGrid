@@ -33,17 +33,20 @@ npm run fetch -- gitlab <username>  # print a GitLab user's contribution days
 npm run fetch -- github <username>  # print a GitHub user's contribution days (needs GITHUB_TOKEN)
 
 # generate the unified graph (needs GITHUB_TOKEN, GITHUB_USERNAME, GITLAB_USERNAME)
-npm run generate-graph -- contributions.svg
+# writes <prefix>-light.svg and <prefix>-dark.svg
+npm run generate-graph -- contributions
 ```
 
 ## Contribution graph
 
 `.github/workflows/generate-graph.yml` runs `generate-graph` daily and pushes the
-resulting `contributions.svg` to a dedicated `assets` branch (kept separate from `main` so
-scheduled runs don't add noise to its history). The README embeds that file directly from
-`raw.githubusercontent.com`, which serves files straight out of a public repo with no
-auth — the same mechanism most "profile README" widgets use, since a README itself can't
-run any code (no `fetch`, no scripts), only reference static image URLs.
+resulting `contributions-light.svg` / `contributions-dark.svg` to a dedicated `assets`
+branch (kept separate from `main` so scheduled runs don't add noise to its history). The
+README embeds both via a `<picture>` element with `prefers-color-scheme` sources, so
+GitHub shows whichever variant matches the viewer's theme — a README can't run any code
+(no `fetch`, no scripts) to pick a theme at runtime, only reference static image URLs, so
+both variants have to be pre-rendered. Files are served from `raw.githubusercontent.com`,
+which serves straight out of a public repo with no auth needed.
 
 ## Testing
 
