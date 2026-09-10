@@ -48,6 +48,26 @@ GitHub shows whichever variant matches the viewer's theme — a README can't run
 both variants have to be pre-rendered. Files are served from `raw.githubusercontent.com`,
 which serves straight out of a public repo with no auth needed.
 
+## Setting up your own contribution graph
+
+DevGrid isn't published as an npm package or a reusable GitHub Action yet — the way to
+run this for yourself today is to fork or copy this repo and point it at your own
+accounts:
+
+1. In `.github/workflows/generate-graph.yml`, change the `GITHUB_USERNAME` and
+   `GITLAB_USERNAME` env values to your own usernames on each platform.
+2. Make sure the repo allows Actions to push: **Settings → Actions → General → Workflow
+   permissions → "Read and write permissions"**. Some accounts/orgs default this to
+   read-only, which would make the workflow's push step fail even though
+   `permissions: contents: write` is already declared in the workflow file. No token or
+   secret needs to be created — `${{ github.token }}` (auto-provided by Actions) is
+   enough to query GitHub's `contributionsCollection`, confirmed working.
+3. In `README.md`, update the three `raw.githubusercontent.com/manuelzzz/DevGrid/...`
+   URLs to your own `<owner>/<repo>`.
+4. Run the workflow once manually (Actions tab → "Generate contribution graph" → Run
+   workflow) to create the `assets` branch and the first two SVGs, rather than waiting
+   for the next scheduled run.
+
 ## Testing
 
 ```sh

@@ -7,9 +7,18 @@ specific to working here as an agent.
 
 ## Current state
 
-DevGrid is freshly scaffolded. There is no product functionality yet —
-`src/index.ts` is a placeholder. Don't treat its presence as a hint to build
-around it; wait for a concrete task.
+DevGrid fetches contribution data from GitHub (`src/contributions/github.ts`, GraphQL API,
+needs `GITHUB_TOKEN`) and GitLab (`src/contributions/gitlab.ts`, public `calendar.json`,
+no auth), merges them (`src/contributions/merge.ts`), and renders the result as a
+light/dark SVG pair (`src/render/svg.ts`). `.github/workflows/generate-graph.yml` runs
+that pipeline daily and publishes the SVGs to a dedicated `assets` branch, embedded in
+this repo's own README via `raw.githubusercontent.com`. See `docs/development.md` for how
+it's wired together and how to point it at a different repo/usernames.
+
+This is still an early, single-purpose pipeline, not a generalized library or a
+publishable Action — don't treat its existence as license to build the generic
+"provider"/"Action" abstraction around it preemptively (see `AGENTS.md`). Extend it
+concretely, for the task actually given.
 
 ## Before making a change
 

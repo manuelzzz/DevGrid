@@ -12,7 +12,8 @@ _(Generated daily by [`.github/workflows/generate-graph.yml`](.github/workflows/
 
 ## Getting started
 
-See [docs/development.md](docs/development.md) for setup, running, testing, and linting instructions.
+See [docs/development.md](docs/development.md) for setup, running, testing, and linting
+instructions, including [how to point this at your own GitHub/GitLab accounts](docs/development.md#setting-up-your-own-contribution-graph).
 
 ## License
 
