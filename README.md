@@ -2,7 +2,11 @@
 
 A unified contribution graph combining activity from platforms like GitHub and GitLab.
 
-![DevGrid contribution graph](https://raw.githubusercontent.com/manuelzzz/DevGrid/assets/contributions.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/manuelzzz/DevGrid/assets/contributions-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/manuelzzz/DevGrid/assets/contributions-light.svg">
+  <img src="https://raw.githubusercontent.com/manuelzzz/DevGrid/assets/contributions-light.svg" alt="DevGrid contribution graph">
+</picture>
 
 _(Generated daily by [`.github/workflows/generate-graph.yml`](.github/workflows/generate-graph.yml).)_
 
