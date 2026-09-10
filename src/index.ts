@@ -1,11 +1,6 @@
-/**
- * Entry point placeholder.
- *
- * This project is being scaffolded. Real functionality (fetching and
- * combining contribution data) will be added incrementally.
- */
-export function main(): void {
-  console.log("DevGrid scaffold is ready.");
-}
-
-main();
+export * from "./contributions/types.js";
+export * from "./contributions/errors.js";
+export * from "./contributions/github.js";
+export * from "./contributions/gitlab.js";
+export * from "./contributions/merge.js";
+export * from "./render/svg.js";
