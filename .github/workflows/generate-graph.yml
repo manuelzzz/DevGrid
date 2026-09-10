@@ -1,0 +1,44 @@
+name: Generate contribution graph
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run generate-graph -- /tmp/contributions.svg
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_USERNAME: manuelzzz
+          GITLAB_USERNAME: manuelzzz
+
+      - name: Publish to the assets branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin assets:assets 2>/dev/null || true
+
+          if git show-ref --verify --quiet refs/heads/assets; then
+            git checkout assets
+          else
+            git checkout --orphan assets
+            git rm -rf . > /dev/null
+          fi
+
+          cp /tmp/contributions.svg contributions.svg
+          git add contributions.svg
+          git diff --cached --quiet && echo "No changes" || git commit -m "Update contribution graph"
+          git push origin assets

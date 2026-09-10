@@ -10,8 +10,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "dev": "tsx watch src/index.ts",
-    "start": "node dist/index.js",
+    "fetch": "tsx src/scripts/print-contributions.ts",
+    "generate-graph": "tsx src/scripts/generate-graph.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",

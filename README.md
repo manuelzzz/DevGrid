@@ -2,7 +2,9 @@
 
 A unified contribution graph combining activity from platforms like GitHub and GitLab.
 
-This project is in early scaffolding stage — no functionality has been implemented yet.
+![DevGrid contribution graph](https://raw.githubusercontent.com/manuelzzz/DevGrid/assets/contributions.svg)
+
+_(Generated daily by [`.github/workflows/generate-graph.yml`](.github/workflows/generate-graph.yml).)_
 
 ## Getting started
 
